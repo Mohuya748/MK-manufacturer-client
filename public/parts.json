@@ -2,8 +2,7 @@
     {
         "img": "https://i.ibb.co/FqmrqXj/pressure-foot.jpg",
         "name": "Pressurre Foot",
-        "price": "190BDT/unit",
-        "_id": 211,
+        "price": "190BDT/unit", 
         "description": "Mango for summer. A demandable fruit for summer",
         "min_order_Quantity" : "20000 piece",
         "available_Quantity" : "20000 piece"
@@ -13,7 +12,6 @@
         "img": "https://i.ibb.co/cwTrVrw/length-dial.jpg",
         "name": "Stitch Length",
         "price": "40BDT/unit",
-        "_id": 212,
         "description": "Very refreshing fruit for summer",
         "min_order_Quantity" : "20000 piece",
         "available_Quantity" : "20000 piece"
@@ -24,7 +22,6 @@
         "img": "https://i.ibb.co/QD0FKXn/bobbin-cover.jpg",
         "name": "Bobbin Cover",
         "price": "20BDT/BDT",
-        "_id": 215,
         "description": "A lovable fruit for all childern and grown ups.",
         "min_order_Quantity" : "20000 piece",
         "available_Quantity" : "20000 piece"
@@ -33,7 +30,6 @@
         "img": "https://i.ibb.co/mN5kLKY/slide-pate.jpg",
         "name": "Slide Bobbin Plate",
         "price": "100BDT/kg",
-        "_id": 213,
         "description": "Most underrated fruit in Bangladesh but we have a huge production of this.",
         "min_order_Quantity" : "20000 piece",
         "available_Quantity" : "20000 piece"
@@ -42,7 +38,6 @@
         "img": "https://i.ibb.co/Jx91JCc/spool-pin.jpg",
         "name": "Spool Pin",
         "price": "50BDT/unnit",
-        "_id": 214,
         "description": "Most popular fruit. Demandable throughout the whole year.",
         "min_order_Quantity" : "20000 piece",
         "available_Quantity" : "20000 piece"
@@ -52,7 +47,6 @@
         "img": "https://i.ibb.co/BBHTChq/needle-plate.jpg",
         "name": "Needle Plate",
         "price": "27BDT/unit",
-        "_id": 216,
         "description": "A very expensive fruit for bangladeshi people.",
         "min_order_Quantity" : "20000 piece",
         "available_Quantity" : "20000 piece"
@@ -61,7 +55,6 @@
         "img": "https://i.ibb.co/V9qMdyH/lever.jpg",
         "name": "Lever",
         "price": "270BDT/unit",
-        "_id": 216,
         "description": "A very expensive fruit for bangladeshi people.",
         "min_order_Quantity" : "20000 piece",
         "available_Quantity" : "20000 piece"
@@ -70,7 +63,6 @@
         "img": "https://i.ibb.co/XxMg8GN/handwheel.jpg",
         "name": "Handwhwheel",
         "price": "150DT/unit",
-        "_id": 217,
         "description":"A fruit which is acceptable for bangladeshi people in every season!",
         "min_order_Quantity" : "20000 piece",
         "available_Quantity" : "20000 piece"
