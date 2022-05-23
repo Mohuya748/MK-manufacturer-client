@@ -35,7 +35,7 @@ const Login = () => {
     }
 
     const onSubmit = data => {
-        signInWithEmailAndPassword(data.email, data.password);
+        signInWithEmailAndPassword(data.email, data.password,data.name);
     }
 
     return (
