@@ -5,11 +5,12 @@ const Part = ({ part }) => {
     const { name, _id, img, price, description, available_Quantity, min_order_Quantity } = part;
     const navigate = useNavigate();
 
-    const navigateToPurchase = _id => {
-        navigate(`/purchase`);
+    const navigateToPurchase = id => {
+        navigate(`/parts/${_id}`);
     }
     return (
-        <div class="card card-compact w-96 bg-base-100 shadow-xl">
+        <div className='conatainer'>
+            <div class="card card-compact w-96 bg-base-100 shadow-xl  ">
             <figure><img src={img} alt="image" /></figure>
             <div class="card-body">
                 <h2 class="card-title text-cyan-500">{name}</h2>
@@ -21,6 +22,7 @@ const Part = ({ part }) => {
                     <button onClick={() => navigateToPurchase(_id)}  class="btn btn-primary bg-cyan-300">Purchase</button>
                 </div>
             </div>
+        </div>
         </div>
     );
 };
