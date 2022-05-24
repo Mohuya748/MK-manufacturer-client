@@ -10,16 +10,16 @@ const Part = ({ part }) => {
     }
     return (
         <div className='conatainer'>
-            <div class="card card-compact w-96 bg-base-100 shadow-xl  ">
+            <div className="card card-compact w-96 bg-base-100 shadow-xl  ">
             <figure><img src={img} alt="image" /></figure>
-            <div class="card-body">
-                <h2 class="card-title text-cyan-500">{name}</h2>
+            <div className="card-body">
+                <h2 className="card-title text-cyan-500">{name}</h2>
                 <p><span className='font-bold'>Price :</span> {price}</p>
                 <p><span className='font-bold'>Short Description :</span> {description}</p>
                 <p><span className='font-bold'>Available Quantity :</span> {available_Quantity}</p>
                 <p><span className='font-bold'>Minimum Order Quantity :</span> {min_order_Quantity}</p>
-                <div class="card-actions justify-end">
-                    <button onClick={() => navigateToPurchase(_id)}  class="btn btn-primary bg-cyan-300">Purchase</button>
+                <div className="card-actions justify-end">
+                    <button onClick={() => navigateToPurchase(_id)}  className="btn btn-primary bg-cyan-300">Purchase</button>
                 </div>
             </div>
         </div>

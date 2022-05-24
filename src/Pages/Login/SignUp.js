@@ -4,6 +4,7 @@ import auth from '../../firebase.init';
 import { useForm } from "react-hook-form";
 import Loading from '../Shared/Loading';
 import { Link, useNavigate } from 'react-router-dom';
+import useToken from '../../Hooks/UseToken';
 
 const SignUp = () => {
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -17,6 +18,8 @@ const SignUp = () => {
 
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
+    const [token]  = useToken(user || gUser);
+
     const navigate = useNavigate();
 
     let signInError;
@@ -29,20 +32,21 @@ const SignUp = () => {
         signInError = <p className='text-red-500'><small>{error?.message || gError?.message || updateError?.message}</small></p>
     }
 
-    if (user || gUser) {
-        console.log(user || gUser);
+    if (token) {
+        navigate('/appointment');
     }
 
     const onSubmit = async data => {
-        await createUserWithEmailAndPassword(data.email, data.password ,data.name);
+        await createUserWithEmailAndPassword(data.email, data.password);
         await updateProfile({ displayName: data.name });
-        navigate('/home');
+        console.log('update done');
+        
     }
     return (
         <div className='flex h-screen justify-center items-center'>
             <div className="card w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
-                    <h2 className="text-center text-2xl font-bold text-cyan-500">Sign Up</h2>
+                    <h2 className="text-center text-2xl font-bold">Sign Up</h2>
                     <form onSubmit={handleSubmit(onSubmit)}>
 
                         <div className="form-control w-full max-w-xs">
@@ -115,13 +119,13 @@ const SignUp = () => {
                         </div>
 
                         {signInError}
-                        <input className='btn w-full max-w-xs text-white bg-cyan-500' type="submit" value="Sign Up" />
+                        <input className='btn w-full max-w-xs text-white' type="submit" value="Sign Up" />
                     </form>
                     <p><small>Already have an account? <Link className='text-primary' to="/login">Please login</Link></small></p>
                     <div className="divider">OR</div>
                     <button
                         onClick={() => signInWithGoogle()}
-                        className="btn btn-outline text-white bg-cyan-500"
+                        className="btn btn-outline"
                     >Continue with Google</button>
                 </div>
             </div>
