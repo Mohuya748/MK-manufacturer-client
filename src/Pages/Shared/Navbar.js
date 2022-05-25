@@ -21,6 +21,7 @@ const Navbar = () => {
         }
         <li>{user ? <button className="btn btn-ghost" onClick={logout} >Sign Out</button> : <Link to="/login">Login</Link>}</li>
         <li><Link to='/blogs'>Blogs</Link></li>
+        <li><Link to='/myportfolio'>My Portfolio</Link></li>
     </>
         
     
