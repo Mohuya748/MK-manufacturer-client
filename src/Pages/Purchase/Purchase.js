@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init'
 
@@ -8,6 +7,8 @@ const Purchase = () => {
     const { id } = useParams();
     const [part, setPart] = useState([]);
     const [user] = useAuthState(auth);
+    const [tPrice, setTprice] = useState(1);
+
 
 
     useEffect(() => {
@@ -22,20 +23,29 @@ const Purchase = () => {
         console.log(e.target.value);
     }
 
+    // const handlePrice
+    //     = event => {
+    //         const orderQuantity = event.target.quantity.value;
+    //         const totalPrice = orderQuantity * part.price;
+    //         setTprice(totalPrice) ;
+    //     }
 
-    const handleSubmit = (event) => {
+
+    const handleBooking = (event) => {
         event.preventDefault();
-       
+
         const booking = {
             bookingId: id,
-            name : user.displayName,
+            name: user.displayName,
             email: user.email,
-            address : event.target.address.value,
-            phone : event.target.phone.value,
-            orderQuantity : event.target.quantity.value
+            address: event.target.address.value,
+            phone: event.target.phone.value,
+            orderQuantity: event.target.quantity.value
 
         }
-        
+        // const totalPrice = orderQuantity * part.price;
+        // setTprice(totalPrice)
+
 
         console.log(booking);
         const url = `http://localhost:5000/booking`;
@@ -49,8 +59,8 @@ const Purchase = () => {
             .then(res => res.json())
             .then(result => {
                 console.log(result);
-                alert('item added successfully!!!');
-                // event.target.reset();
+                alert('order added successfully!!!');
+                event.target.reset();
 
 
             })
@@ -71,82 +81,23 @@ const Purchase = () => {
 
                 </div>
             </div>
+            <div className="text-center w-5/6 mx-auto ">
+                <h2 className='text-3xl text-secondary'>Place Order</h2>
+                <form onSubmit={handleBooking} className='grid grid-cols-1 gap-3 justify-items-center mt-2'>
 
-            <form onSubmit={handleSubmit}>
-                <div className="text-center w-5/6 mx-auto mt-8 ">
-                    <h1 className="block m-6 text-4xl font-semibold text-black">Place Order</h1>
-                    <label for="income" className="text-black text-2xl font-semibold">Name:</label>
-                    <input id="income-input" type="text" name="name" value={user.displayName} disabled
-                        className=" w-full mb-4 mx-auto border-bfocus:outline-none p-1 rounded-md border-2 border-green-500 text-center font-semibold" />
-                    <div>
-                        <label for="food" className=" text-black text-2xl font-semibold">Email:</label>
-                        <input id="food-input" type="email" name="email" value={user.email} disabled
-                            className=" w-full mb-4 mx-auto border-bfocus:outline-none p-1 rounded-md border-2 border-green-500 text-center font-semibold" />
-                    </div>
-                    <div>
-                        <label for="rent" className="text-black text-2xl font-semibold">Address:</label>
-                        <input id="rent-input" type="text" name="adress"
-                            className=" w-full mb-4 mx-auto border-bfocus:outline-none p-1 rounded-md border-2 border-green-500 text-center font-semibold" />
-                    </div>
-                    <div>
-                        <label for="cloths" className="text-black text-2xl font-semibold">Phone No.:</label>
-                        <input id="cloths-input" type="number" name="phone"
-                            className="w-full mb-4 mx-auto border-bfocus:outline-none p-1 rounded-md border-2 border-green-500 text-center font-semibold" />
-                    </div>
-                    <div>
-                        <label className="text-black text-2xl font-semibold">Order Quantity:</label>
-                        <input type="text" name='quantity' onChange={handleQuantity}
-                            className="w-full mb-4 mx-auto border-bfocus:outline-none p-1 rounded-md border-2 border-green-500 text-center font-semibold" />
-                    </div>
-
-                    <input type="submit" value='Purchase'
-                        className="bg-slate-400 px-6 py-2 rounded border-2 border-white font-semibold hover:bg-green-400" />
-                    {/* <!-- error handelling  --> */}
-                    <div className="error-section">
-                        <p id="error-msg" className="error "><i className="fa-solid fa-square-xmark"></i> expenses can't be greater
-                            than income. Please give a valid input in each field.</p>
-                    </div>
-                </div>
-            </form>
-
-
-            {/* <h2 className='text-2xl text-cyan-500'>Complete Your Purchase</h2>
-                <form >
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label">
-                            <span className="label-text">Name:</span>
-                        </label>
-                        <input value={user.name} type="text" placeholder="Name" className="input input-bordered w-full max-w-xs" />
-                    </div>
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label">
-                            <span className="label-text">Email:</span>
-                        </label>
-                        <input value={user.email} type="email" placeholder="Email" disabled className="input input-bordered w-full max-w-xs" />
-                    </div>
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label">
-                            <span className="label-text">Address:</span>
-                        </label>
-                        <input type="text" placeholder="Address" className="input input-bordered w-full max-w-xs" />
-                    </div>
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label">
-                            <span className="label-text">Phone No.:</span>
-                        </label>
-                        <input type="number" placeholder="Phone No." className="input input-bordered w-full max-w-xs" />
-                    </div>
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label">
-                            <span className="label-text">Order Quantity:</span>
-                        </label>
-                        <input type="number" placeholder="Order Quantity" name='Quantity' className="input input-bordered w-full max-w-xs" />
-                    </div>
-                    <input type="submit" value="Restock" className='m-3 p-2 bg-cyan-500 rounded-full' />
-
+                    <input type="text" name="name" disabled value={user?.displayName || ''} className="input input-bordered w-full max-w-xs" />
+                    <input type="email" name="email" disabled value={user?.email || ''} className="input input-bordered w-full max-w-xs" />
+                    <input type="text" name="phone" placeholder="Phone Number" className="input input-bordered w-full max-w-xs" />
+                    <input type="text" name="address" placeholder="Address" className="input input-bordered w-full max-w-xs" />
+                    <input type="text" name="quantity" placeholder="order quantity" className="input input-bordered w-full max-w-xs" />
+                    <p>total price :{tPrice} </p>
+                    <input type="submit" value="purchase" className="btn btn-secondary w-full max-w-xs" />
                 </form>
 
-            </div> */}
+
+
+
+            </div>
         </div >
 
     );

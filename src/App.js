@@ -32,9 +32,9 @@ function App() {
           <RequireAuth>
             <DashBoard></DashBoard>
           </RequireAuth>}>
-          <Route index element={<MyOrders></MyOrders>}></Route>
+          <Route index element={<MyProfile></MyProfile>}></Route>
           <Route path="review" element={<AddReview></AddReview>}></Route>
-          <Route path="profile" element={<MyProfile></MyProfile>}></Route>
+          <Route path="orders" element={<MyOrders></MyOrders>}></Route>
         </Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/signup' element={<SignUp></SignUp>}></Route>
