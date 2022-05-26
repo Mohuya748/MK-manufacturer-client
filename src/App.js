@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router';
 import './App.css';
 import Blogs from './Pages/Blogs/Blogs';
 import AddReview from './Pages/DashBoard/AddReview';
+import AllUsers from './Pages/DashBoard/AllUsers';
 import DashBoard from './Pages/DashBoard/DashBoard';
 import MyOrders from './Pages/DashBoard/MyOrders';
 import MyProfile from './Pages/DashBoard/MyProfile';
@@ -15,6 +16,10 @@ import NotFound from './Pages/NotFound/NotFound';
 import Purchase from './Pages/Purchase/Purchase';
 import Footer from './Pages/Shared/Footer';
 import Navbar from './Pages/Shared/Navbar';
+import { ToastContainer } from 'react-toastify';
+import RequireAdmin from './Pages/Login/RequireAdmin';
+import AddProduct from './Pages/DashBoard/AddProduct';
+import ManageProducts from './Pages/DashBoard/ManageProducts';
 
 function App() {
   return (
@@ -35,6 +40,9 @@ function App() {
           <Route index element={<MyProfile></MyProfile>}></Route>
           <Route path="review" element={<AddReview></AddReview>}></Route>
           <Route path="orders" element={<MyOrders></MyOrders>}></Route>
+          <Route path="users" element={<RequireAdmin><AllUsers></AllUsers></RequireAdmin>}></Route>
+          <Route path="addProduct" element={<RequireAdmin><AddProduct></AddProduct></RequireAdmin>}></Route>
+          <Route path="manageProduct" element={<RequireAdmin><ManageProducts></ManageProducts></RequireAdmin>}></Route>
         </Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/signup' element={<SignUp></SignUp>}></Route>
@@ -43,6 +51,7 @@ function App() {
         <Route path='/*' element={<NotFound></NotFound>}></Route>
       </Routes>
       <Footer></Footer>
+      <ToastContainer />
     </div>
   );
 }
