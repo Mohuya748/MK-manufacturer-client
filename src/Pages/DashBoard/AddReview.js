@@ -27,9 +27,8 @@ const AddReview = () => {
                     const img = result.data.url;
                     const reviews = {
                         name: data.name,
-                       country: data.country,
+                        country: data.country,
                         comment: data.comment,
-                        rating2: data.rating2,
                         img: img
                     }
                     // send to your database 
@@ -67,7 +66,7 @@ const AddReview = () => {
                             <div className="form-control w-full max-w-xs m-4">
                                 <input
                                     type="text"
-                                    placeholder="Product Name"
+                                    placeholder="Name"
                                     className="input input-bordered w-full max-w-xs"
                                     {...register("name", {
                                         required: {
@@ -90,27 +89,6 @@ const AddReview = () => {
                                         }
                                     })}
                                 />
-
-                            </div>
-                            <div className="form-control w-full max-w-xs m-4">
-                                <div className="rating">
-                                    <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" />
-                                    <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
-                                    <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" />
-                                    <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" />
-                                    <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" />
-                                </div>
-                                {/* <input
-                                    type="country"
-                                    placeholder="Country"
-                                    className="input input-bordered w-full max-w-xs"
-                                    {...register("country", {
-                                        required: {
-                                            value: true,
-                                            message: 'country is Required'
-                                        }
-                                    })}
-                                /> */}
 
                             </div>
 
