@@ -19,6 +19,7 @@ import Navbar from './Pages/Shared/Navbar';
 import RequireAdmin from './Pages/Login/RequireAdmin';
 import AddProduct from './Pages/DashBoard/AddProduct';
 import ManageProducts from './Pages/DashBoard/ManageProducts';
+import RequireNonAdmin from './Pages/Login/RequireNonAdmin';
 
 function App() {
   return (
@@ -37,8 +38,8 @@ function App() {
             <DashBoard></DashBoard>
           </RequireAuth>}>
           <Route index element={<MyProfile></MyProfile>}></Route>
-          <Route path="review" element={<AddReview></AddReview>}></Route>
-          <Route path="orders" element={<MyOrders></MyOrders>}></Route>
+          <Route path="review" element={<RequireNonAdmin><AddReview></AddReview></RequireNonAdmin>}></Route>
+          <Route path="orders" element={<RequireNonAdmin><MyOrders></MyOrders></RequireNonAdmin>}></Route>
           <Route path="users" element={<RequireAdmin><AllUsers></AllUsers></RequireAdmin>}></Route>
           <Route path="addProduct" element={<RequireAdmin><AddProduct></AddProduct></RequireAdmin>}></Route>
           <Route path="manageProduct" element={<RequireAdmin><ManageProducts></ManageProducts></RequireAdmin>}></Route>

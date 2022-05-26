@@ -34,6 +34,7 @@ const SignUp = () => {
 
     if (token) {
         navigate('/');
+        window.location.reload();
     }
 
     const onSubmit = async data => {

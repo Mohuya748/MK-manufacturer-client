@@ -26,6 +26,8 @@ const Login = () => {
     useEffect( () =>{
         if (token) {
             navigate(from, { replace: true });
+            window.location.reload();
+
         }
     }, [user, gUser, from, navigate])
 

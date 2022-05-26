@@ -1,33 +1,15 @@
-import React from 'react';
-import prople1 from '../../images/people1.png';
-import prople2 from '../../images/people2.png';
-import prople3 from '../../images/people3.png';
+import React, { useEffect, useState } from 'react';
+
 import Review from './Review';
 
 const Reviews = () => {
-    const reviews = [
-        {
-            _id: 1,
-            name: "Mark Winn",
-            comment: '',
-            img: prople1,
-            country: "Florida, USA"
-        },
-        {
-            _id: 2,
-            name: "Winn Flow",
-            comment: " ",
-            img: prople2,
-            country: "Montreal, Canada"
-        },
-        {
-            _id: 3,
-            name: "Nick Jonas",
-            comment: " ",
-            img: prople3,
-            country: "California, USA"
-        }
-    ]
+    const [reviews , setReviews] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:5000/reviews')
+            .then(res => res.json())
+            .then(data => setReviews(data));
+    })
     return (
         <div className='container ps-20'>
             <div className='mt-20'>
