@@ -16,7 +16,6 @@ import NotFound from './Pages/NotFound/NotFound';
 import Purchase from './Pages/Purchase/Purchase';
 import Footer from './Pages/Shared/Footer';
 import Navbar from './Pages/Shared/Navbar';
-import { ToastContainer } from 'react-toastify';
 import RequireAdmin from './Pages/Login/RequireAdmin';
 import AddProduct from './Pages/DashBoard/AddProduct';
 import ManageProducts from './Pages/DashBoard/ManageProducts';
@@ -51,7 +50,7 @@ function App() {
         <Route path='/*' element={<NotFound></NotFound>}></Route>
       </Routes>
       <Footer></Footer>
-      <ToastContainer />
+      
     </div>
   );
 }

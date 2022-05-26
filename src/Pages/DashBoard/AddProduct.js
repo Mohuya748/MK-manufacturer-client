@@ -1,31 +1,65 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
 import { useAuthState } from 'react-firebase-hooks/auth';
-import auth from '../../firebase.init'
+import auth from '../../firebase.init';
+import { ToastContainer, toast  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddProduct = () => {
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit, reset } = useForm();
     const [user] = useAuthState(auth);
 
-    const onSubmit = (data) => {
-        console.log(data);
-        const url = `http://localhost:5000/parts`;
+    const imageStorageKey = 'aacb0ffadb638065a6d27e5d793cd159';
+
+
+    const onSubmit = async data => {
+        const image = data.image[0];
+        const formData = new FormData();
+        formData.append('image', image);
+        const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
         fetch(url, {
             method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(data)
+            body: formData
         })
             .then(res => res.json())
             .then(result => {
-                console.log(result);
-                alert('product added successfully!!!');
-                // event.target.reset();
+                if (result.success) {
+                    const img = result.data.url;
+                    const products = {
+                        name: data.name,
+                        price: data.price,
+                        description: data.description,
+                        min_order_Quantity: data.min_order_Quantity,
+                        available_Quantity: data.available_Quantity,
+                        img: img
+                    }
+                    // send to your database 
+                    fetch('http://localhost:5000/parts', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json',
+                            authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                        },
+                        body: JSON.stringify(products)
+                    })
+                        .then(res => res.json())
+                        .then(inserted => {
+                            if (inserted.insertedId) {
+                                toast.success('Product added successfully')
+                                reset();
 
+                            }
+                            else {
+                                toast.error('Failed to add the product');
+                            }
+                        })
+
+                }
 
             })
-    };
+    }
+
+
     return (
 
         <div className='flex h-screen justify-center items-center'>
@@ -33,24 +67,6 @@ const AddProduct = () => {
                 <div className="card-body">
                     <h2 className="text-center text-2xl text-secondary font-bold">Add your Product</h2>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        {/* <div className="form-control w-full max-w-xs m-4">
-                            <input
-                                type="email"
-                                placeholder="Your Email"
-                                className="input input-bordered w-full max-w-xs"
-                                {...register("email", {
-                                    required: {
-                                        value: true,
-                                        message: 'Email is Required'
-                                    },
-                                    pattern: {
-                                        value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                                        message: 'Provide a valid Email'
-                                    }
-                                })}
-                            />
-
-                        </div> */}
                         <div className="form-control w-full max-w-xs m-4">
                             <input
                                 type="text"
@@ -72,7 +88,7 @@ const AddProduct = () => {
                                 {...register("price", {
                                     required: {
                                         value: true,
-                                        message: 'Name is Required'
+                                        message: 'price is Required'
                                     }
                                 })}
                             />
@@ -123,12 +139,28 @@ const AddProduct = () => {
                             />
 
                         </div>
+                        <div className="form-control w-full m-4 max-w-xs">
+                            <label className="label">
+                                <span className="label-text">Photo</span>
+                            </label>
+                            <input
+                                type="file"
+                                className="input input-bordered w-full max-w-xs"
+                                {...register("image", {
+                                    required: {
+                                        value: true,
+                                        message: 'Image is Required'
+                                    }
+                                })}
+                            />
+                        </div>
                         <button
                             type='submit'
                             className="btn btn-secondary  m-5"
                         >Add Product</button>
                     </form>
                 </div>
+                <ToastContainer />
             </div >
         </div>
 

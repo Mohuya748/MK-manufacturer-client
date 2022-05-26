@@ -1,6 +1,6 @@
 import React from 'react';
-import { toast } from 'react-toastify';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserRow = ({ user, refetch }) => {
     const { email, role } = user;
@@ -14,8 +14,8 @@ const UserRow = ({ user, refetch }) => {
             .then(res => {
                 if (res.status === 403) {
                     toast.error('Failed to Make an admin');
-                } 
-                return  res.json()
+                }
+                return res.json()
             })
             .then(data => {
                 if (data.modifiedCount > 0) {
@@ -26,12 +26,16 @@ const UserRow = ({ user, refetch }) => {
             })
     }
     return (
-        <tr>
-            <th>1</th>
-            <td>{email}</td>
-            <td>{role !== 'admin' && <button onClick={makeAdmin} class="btn btn-xs">Make Admin</button>}</td>
-            <td><button class="btn btn-xs">Remove User</button></td>
-        </tr>
+        <>
+            <tr>
+                <th>1</th>
+                <td>{email}</td>
+                <td>{role !== 'admin' && <button onClick={makeAdmin} class="btn btn-xs">Make Admin</button>}</td>
+                <td><button class="btn btn-xs">Remove User</button></td>
+            </tr>
+            <ToastContainer />
+        </>
+
     );
 };
 
