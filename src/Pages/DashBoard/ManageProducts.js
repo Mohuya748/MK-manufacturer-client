@@ -1,12 +1,12 @@
 import React from 'react';
 import useProducts from '../../Hooks/useProducts';
 
-
 const ManageProducts = () => {
     const [product, setProduct] = useProducts();
 
     const handleDelete = id => {
         const proceed = window.confirm('Are you sure you want to delete the item?');
+
         if (proceed) {
             const url = `https://protected-caverns-27615.herokuapp.com/parts/${id}`;
             fetch(url, {

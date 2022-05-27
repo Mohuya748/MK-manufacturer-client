@@ -1,120 +1,75 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useForm } from "react-hook-form";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import auth from '../../firebase.init';
+import Profile from './Profile';
+
 
 
 const MyProfile = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
     const [user] = useAuthState(auth);
-    const [profile, setProfile] = useState([]);
 
-    // const imageStorageKey = 'aacb0ffadb638065a6d27e5d793cd159';
-    useEffect(() => {
-        fetch('https://protected-caverns-27615.herokuapp.com/profile')
-            .then(res => res.json())
-            .then(data => setProfile(data));
-    })
 
-    const onSubmit = (data) => {
-        const profile = {
-            name: user.displayName,
-            email: user.email,
-            education: data.education,
-            phone: data.location,
-            linkedin: data.linkedin,
 
-        }
-        fetch(`https://protected-caverns-27615.herokuapp.com/profile/${user.email}`, {
-            method: 'PUT',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('accessToken')}`
-            }
+
+    const imageStorageKey = 'aacb0ffadb638065a6d27e5d793cd159';
+
+    const onSubmit = async data => {
+        const image = data.image[0];
+        const formData = new FormData();
+        formData.append('image', image);
+        const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
+        fetch(url, {
+            method: 'POST',
+            body: formData
         })
-            .then(res => {
-                if (res.status === 403) {
-                    toast.error('Failed to Make an admin');
-                }
-                return res.json(profile)
-            })
-            .then(data => {
-                if (data.modifiedCount > 0) {
-                    reset();
-                    toast.success(`Successfully made an admin`);
-                }
+            .then(res => res.json())
+            .then(result => {
+                if (result.success) {
+                    const img = result.data.url;
+                    const profile = {
+                        name: user.displayName,
+                        email: user.email,
+                        education: data.education,
+                        phone: data.phone,
+                        location : data.location,
+                        linkedin: data.linkedin,
+                        img: img
 
+                    }
+                    fetch(`https://protected-caverns-27615.herokuapp.com/profile/${user.email}`, {
+                        method: 'PUT',
+                        headers: {
+                            'content-type': 'application/json',
+                            authorization: `Bearer ${localStorage.getItem('accessToken')}`
+
+                        },
+                        body: JSON.stringify(profile)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+
+                            toast.success('Updated successfully')
+                            console.log("success", data);
+                            reset()
+                        })
+
+                }
             })
+
     }
-    //     // const image = data.image[0];
-    //     // const formData = new FormData();
-    //     // formData.append('image', image);
-    //     // const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
-    //     // fetch(url, {
-    //     //     method: 'PUT',
-    //     //     body: formData
-    //     // })
-    //     //     .then(res => res.json())
-    //     //     .then(result => {
-    //     //         if (result.success) {
-    //     //             const img = result.data.url;
-    //     const profile = {
-    //         name: user.displayName,
-    //         email: user.email,
-    //         education: profile.education,
-    //         phone: profile.location,
-    //         linkedin: profile.linkedin,
 
-
-    //         // img: img
-    //     }
-    //     // send to your database 
-    //     fetch(`https://protected-caverns-27615.herokuapp.com/profile/${user.email}`, {
-    //         method: 'PUT',
-    //         headers: {
-    //             'content-type': 'application/json',
-    //             authorization: `Bearer ${localStorage.getItem('accessToken')}`
-    //         },
-    //         body: JSON.stringify(profile)
-    //     })
-    //         .then(res => res.json())
-    //         .then(inserted => {
-    //             if (inserted.insertedId) {
-    //                 toast.success('updated successfully')
-    //                 reset();
-
-    //             }
-    //             else {
-    //                 toast.error('Failed to update');
-    //             }
-    //         })
-
-    // }
-
-
-    // }
 
 
     return (
         <div>
             <h2 className='text-center text-secondary text-3xl'>My Profile</h2>
             <div className='flex text-center m-20'>
-                <div class="card w-96 bg-base-100 shadow-xl m-5">
-                    <div class="card-body">
-                        <div class="avatar">
-                            <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                <img src={profile.img} />
-                            </div>
-                        </div>
-                        <h2 class="card-title">{user.displayName}</h2>
-                        <p>Email : {user.email}</p>
-                        <p>Education : {profile.education}</p>
-                        <p>City/District : {profile.location}</p>
-                        <p>Phone no: : {profile.phone}</p>
-                        <p>linkedIn ID : {profile.linkedin}</p>
-
-                    </div>
+                <div>
+               <Profile></Profile>
                 </div>
 
                 <div className='m-5'>
@@ -193,7 +148,7 @@ const MyProfile = () => {
             <ToastContainer />
 
 
-        </div>
+        </div >
     );
 };
 

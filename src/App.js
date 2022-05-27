@@ -19,6 +19,7 @@ import Navbar from './Pages/Shared/Navbar';
 import RequireAdmin from './Pages/Login/RequireAdmin';
 import AddProduct from './Pages/DashBoard/AddProduct';
 import ManageProducts from './Pages/DashBoard/ManageProducts';
+import ManageAllOrders from './Pages/DashBoard/ManageAllOrders';
 import RequireNonAdmin from './Pages/Login/RequireNonAdmin';
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
           <Route path="users" element={<RequireAdmin><AllUsers></AllUsers></RequireAdmin>}></Route>
           <Route path="addProduct" element={<RequireAdmin><AddProduct></AddProduct></RequireAdmin>}></Route>
           <Route path="manageProduct" element={<RequireAdmin><ManageProducts></ManageProducts></RequireAdmin>}></Route>
+          <Route path="manageorders" element={<RequireAdmin><ManageAllOrders></ManageAllOrders></RequireAdmin>}></Route>
         </Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/signup' element={<SignUp></SignUp>}></Route>
@@ -51,7 +53,7 @@ function App() {
         <Route path='/*' element={<NotFound></NotFound>}></Route>
       </Routes>
       <Footer></Footer>
-      
+
     </div>
   );
 }
