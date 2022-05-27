@@ -11,59 +11,91 @@ const MyProfile = () => {
     const [user] = useAuthState(auth);
     const [profile, setProfile] = useState([]);
 
-    const imageStorageKey = 'aacb0ffadb638065a6d27e5d793cd159';
-
-
-    const onSubmit = async data => {
-        const image = data.image[0];
-        const formData = new FormData();
-        formData.append('image', image);
-        const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
-        fetch(url, {
-            method: 'PUT',
-            body: formData
-        })
-            .then(res => res.json())
-            .then(result => {
-                if (result.success) {
-                    const img = result.data.url;
-                    const profile = {
-                        name: user.displayName,
-                        email: user.email,
-
-                        img: img
-                    }
-                    // send to your database 
-                    fetch(`http://localhost:5000/profile/${user.email}`, {
-                        method: 'PUT',
-                        headers: {
-                            'content-type': 'application/json',
-                            authorization: `Bearer ${localStorage.getItem('accessToken')}`
-                        },
-                        body: JSON.stringify(profile)
-                    })
-                        .then(res => res.json())
-                        .then(inserted => {
-                            if (inserted.insertedId) {
-                                toast.success('updated successfully')
-                                reset();
-
-                            }
-                            else {
-                                toast.error('Failed to update');
-                            }
-                        })
-
-                }
-
-            })
-    }
-
+    // const imageStorageKey = 'aacb0ffadb638065a6d27e5d793cd159';
     useEffect(() => {
         fetch('http://localhost:5000/profile')
             .then(res => res.json())
             .then(data => setProfile(data));
     })
+
+    const onSubmit = (data) => {
+        const profile = {
+            name: user.displayName,
+            email: user.email,
+            education: data.education,
+            phone: data.location,
+            linkedin: data.linkedin,
+
+        }
+        fetch(`http://localhost:5000/profile/${user.email}`, {
+            method: 'PUT',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => {
+                if (res.status === 403) {
+                    toast.error('Failed to Make an admin');
+                }
+                return res.json(profile)
+            })
+            .then(data => {
+                if (data.modifiedCount > 0) {
+                    reset();
+                    toast.success(`Successfully made an admin`);
+                }
+
+            })
+    }
+    //     // const image = data.image[0];
+    //     // const formData = new FormData();
+    //     // formData.append('image', image);
+    //     // const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
+    //     // fetch(url, {
+    //     //     method: 'PUT',
+    //     //     body: formData
+    //     // })
+    //     //     .then(res => res.json())
+    //     //     .then(result => {
+    //     //         if (result.success) {
+    //     //             const img = result.data.url;
+    //     const profile = {
+    //         name: user.displayName,
+    //         email: user.email,
+    //         education: profile.education,
+    //         phone: profile.location,
+    //         linkedin: profile.linkedin,
+
+
+    //         // img: img
+    //     }
+    //     // send to your database 
+    //     fetch(`http://localhost:5000/profile/${user.email}`, {
+    //         method: 'PUT',
+    //         headers: {
+    //             'content-type': 'application/json',
+    //             authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    //         },
+    //         body: JSON.stringify(profile)
+    //     })
+    //         .then(res => res.json())
+    //         .then(inserted => {
+    //             if (inserted.insertedId) {
+    //                 toast.success('updated successfully')
+    //                 reset();
+
+    //             }
+    //             else {
+    //                 toast.error('Failed to update');
+    //             }
+    //         })
+
+    // }
+
+
+    // }
+
+
     return (
         <div>
             <h2 className='text-center text-secondary text-3xl'>My Profile</h2>
