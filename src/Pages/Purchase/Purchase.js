@@ -12,7 +12,7 @@ const Purchase = () => {
 
 
     useEffect(() => {
-        const url = `http://localhost:5000/parts/${id}`;
+        const url = `https://protected-caverns-27615.herokuapp.com/parts/${id}`;
         console.log(url);
         fetch(url)
             .then(res => res.json())
@@ -48,7 +48,7 @@ const Purchase = () => {
 
 
         console.log(booking);
-        const url = `http://localhost:5000/booking`;
+        const url = `https://protected-caverns-27615.herokuapp.com/booking`;
         fetch(url, {
             method: 'POST',
             headers: {

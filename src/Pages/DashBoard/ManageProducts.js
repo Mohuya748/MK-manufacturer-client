@@ -8,7 +8,7 @@ const ManageProducts = () => {
     const handleDelete = id => {
         const proceed = window.confirm('Are you sure you want to delete the item?');
         if (proceed) {
-            const url = `http://localhost:5000/parts/${id}`;
+            const url = `https://protected-caverns-27615.herokuapp.com/parts/${id}`;
             fetch(url, {
                 method: 'DELETE'
             })

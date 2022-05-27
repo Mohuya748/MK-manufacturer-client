@@ -13,7 +13,7 @@ const MyProfile = () => {
 
     // const imageStorageKey = 'aacb0ffadb638065a6d27e5d793cd159';
     useEffect(() => {
-        fetch('http://localhost:5000/profile')
+        fetch('https://protected-caverns-27615.herokuapp.com/profile')
             .then(res => res.json())
             .then(data => setProfile(data));
     })
@@ -27,7 +27,7 @@ const MyProfile = () => {
             linkedin: data.linkedin,
 
         }
-        fetch(`http://localhost:5000/profile/${user.email}`, {
+        fetch(`https://protected-caverns-27615.herokuapp.com/profile/${user.email}`, {
             method: 'PUT',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -70,7 +70,7 @@ const MyProfile = () => {
     //         // img: img
     //     }
     //     // send to your database 
-    //     fetch(`http://localhost:5000/profile/${user.email}`, {
+    //     fetch(`https://protected-caverns-27615.herokuapp.com/profile/${user.email}`, {
     //         method: 'PUT',
     //         headers: {
     //             'content-type': 'application/json',

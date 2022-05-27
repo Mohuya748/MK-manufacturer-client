@@ -12,7 +12,7 @@ const MyOrders = () => {
 
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/booking?email=${user.email}`,
+            fetch(`https://protected-caverns-27615.herokuapp.com/booking?email=${user.email}`,
                 {
                     method: 'GET',
                     headers: {
