@@ -6,7 +6,7 @@ import UserRow from './UserRow';
 const AllUsers = () => {
     const { data: users, isLoading, refetch } = useQuery('users', () => fetch('https://protected-caverns-27615.herokuapp.com/user', {
         method: 'GET',
-        headers:{
+        headers: {
             authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }
     }).then(res => res.json()));
@@ -21,19 +21,19 @@ const AllUsers = () => {
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Name</th>
+                            <th>Name</th>S
                             <th>Job</th>
                             <th>Favorite Color</th>
                         </tr>
                     </thead>
                     <tbody>
-                       {
-                           users.map(user=><UserRow
-                           key={user._id}
-                           user={user}
-                           refetch={refetch}
-                           ></UserRow>)
-                       }
+                        {
+                            users.map(user => <UserRow
+                                key={user._id}
+                                user={user}
+                                refetch={refetch}
+                            ></UserRow>)
+                        }
                     </tbody>
                 </table>
             </div>
